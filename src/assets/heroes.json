@@ -2,161 +2,161 @@
     {
         "id": 1,
         "name": "Abrams",
-        "avatar": "bull_card.png.webp"
+        "avatar": "bull_card.png"
     },
     {
         "id": 2,
         "name": "Bebop",
-        "avatar": "bebop_card.png.webp"
+        "avatar": "bebop_card.png"
     },
     {
         "id": 3,
         "name": "Billy",
-        "avatar": "punkgoat_card.png.webp"
+        "avatar": "punkgoat_card.png"
     },
     {
         "id": 4,
         "name": "Calico",
-        "avatar": "nano_card.png.webp"
+        "avatar": "nano_card.png"
     },
     {
         "id": 5,
         "name": "Drifter",
-        "avatar": "drifter_card.png.webp"
+        "avatar": "drifter_card.png"
     },
     {
         "id": 6,
         "name": "Dynamo asdasdasdasdasdasd",
-        "avatar": "sumo_card.png.webp"
+        "avatar": "sumo_card.png"
     },
     {
         "id": 7,
         "name": "Grey Talon",
-        "avatar": "archer_card.png.webp"
+        "avatar": "archer_card.png"
     },
     {
         "id": 8,
         "name": "Haze",
-        "avatar": "haze_card.png.webp"
+        "avatar": "haze_card.png"
     },
     {
         "id": 9,
         "name": "Holliday",
-        "avatar": "astro_card.png.webp"
+        "avatar": "astro_card.png"
     },
     {
         "id": 10,
         "name": "Infernus",
-        "avatar": "inferno_card.png.webp"
+        "avatar": "inferno_card.png"
     },
     {
         "id": 11,
         "name": "Ivy",
-        "avatar": "tengu_card.png.webp"
+        "avatar": "tengu_card.png"
     },
     {
         "id": 12,
         "name": "Kelvin",
-        "avatar": "kelvin_card.png.webp"
+        "avatar": "kelvin_card.png"
     },
     {
         "id": 13,
         "name": "Lady Geist",
-        "avatar": "spectre_card.png.webp"
+        "avatar": "spectre_card.png"
     },
     {
         "id": 14,
         "name": "Lash",
-        "avatar": "lash_card.png.webp"
+        "avatar": "lash_card.png"
     },
     {
         "id": 15,
         "name": "McGinnis",
-        "avatar": "engineer_card.png.webp"
+        "avatar": "engineer_card.png"
     },
     {
         "id": 16,
         "name": "Mina",
-        "avatar": "vampirebat_card.png.webp"
+        "avatar": "vampirebat_card.png"
     },
     {
         "id": 17,
         "name": "Mirage",
-        "avatar": "mirage_card.png.webp"
+        "avatar": "mirage_card.png"
     },
     {
         "id": 18,
         "name": "Mo & Krill",
-        "avatar": "digger_card.png.webp"
+        "avatar": "digger_card.png"
     },
     {
         "id": 19,
         "name": "Paige",
-        "avatar": "bookworm_card.png.webp"
+        "avatar": "bookworm_card.png"
     },
     {
         "id": 20,
         "name": "Paradox",
-        "avatar": "chrono_card.png.webp"
+        "avatar": "chrono_card.png"
     },
     {
         "id": 21,
         "name": "Pocket",
-        "avatar": "synth_card.png.webp"
+        "avatar": "synth_card.png"
     },
     {
         "id": 22,
         "name": "Seven",
-        "avatar": "gigawatt_card.png.webp"
+        "avatar": "gigawatt_card.png"
     },
     {
         "id": 23,
         "name": "Shiv",
-        "avatar": "shiv_card.png.webp"
+        "avatar": "shiv_card.png"
     },
     {
         "id": 24,
         "name": "Sinclair",
-        "avatar": "magician_card.png.webp"
+        "avatar": "magician_card.png"
     },
     {
         "id": 25,
         "name": "The Doorman",
-        "avatar": "doorman_card.png.webp"
+        "avatar": "doorman_card.png"
     },
     {
         "id": 26,
         "name": "Victor",
-        "avatar": "frank_card.png.webp"
+        "avatar": "frank_card.png"
     },
     {
         "id": 27,
         "name": "Vindicta",
-        "avatar": "hornet_card.png.webp"
+        "avatar": "hornet_card.png"
     },
     {
         "id": 28,
         "name": "Viscous",
-        "avatar": "viscous_card.png.webp"
+        "avatar": "viscous_card.png"
     },
     {
         "id": 29,
         "name": "Vyper",
-        "avatar": "kali_card.png.webp"
+        "avatar": "kali_card.png"
     },
     {
         "id": 30,
         "name": "Warden",
-        "avatar": "warden_card.png.webp"
+        "avatar": "warden_card.png"
     },
     {
         "id": 31,
         "name": "Wraith",
-        "avatar": "wraith_card.png.webp"
+        "avatar": "wraith_card.png"
     },
     {
         "id": 32,
         "name": "Yamato",
-        "avatar": "yamato_card.png.webp"
+        "avatar": "yamato_card.png"
     }
 ]

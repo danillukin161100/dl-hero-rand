@@ -3,11 +3,11 @@ import type { Hero } from "./types";
 export const getHeroImage = async (filename: string): Promise<string> => {
   try {
     // Динамический импорт для Vite
-    const module = await import(`./assets/images/${filename}`);
+    const module = await import(`@assets/images/${filename}.webp`);
     return module.default;
   } catch (error) {
     console.error(`Error loading image: ${filename}`, error);
-    const defaultModule = await import("./assets/images/default.png");
+    const defaultModule = await import("@assets/images/default.png");
     return defaultModule.default;
   }
 };
