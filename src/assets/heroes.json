@@ -1,0 +1,162 @@
+[
+    {
+        "id": 1,
+        "name": "Abrams",
+        "avatar": "/images/bull_card.png.webp?itok=_4Mf_Z4e"
+    },
+    {
+        "id": 2,
+        "name": "Bebop",
+        "avatar": "/images/bebop_card.png.webp?itok=_KBkoxsf"
+    },
+    {
+        "id": 3,
+        "name": "Billy",
+        "avatar": "/images/punkgoat_card.png.webp?itok=kj6bm7D1"
+    },
+    {
+        "id": 4,
+        "name": "Calico",
+        "avatar": "/images/nano_card.png.webp?itok=a4ThxOfE"
+    },
+    {
+        "id": 5,
+        "name": "Drifter",
+        "avatar": "/images/drifter_card.png.webp?itok=Xey56_dR"
+    },
+    {
+        "id": 6,
+        "name": "Dynamo asdasdasdasdasdasd",
+        "avatar": "/images/sumo_card.png.webp?itok=1joAgQoG"
+    },
+    {
+        "id": 7,
+        "name": "Grey Talon",
+        "avatar": "/images/archer_card.png.webp?itok=I-Au65F5"
+    },
+    {
+        "id": 8,
+        "name": "Haze",
+        "avatar": "/images/haze_card.png.webp?itok=h70rCGDE"
+    },
+    {
+        "id": 9,
+        "name": "Holliday",
+        "avatar": "/images/astro_card.png.webp?itok=e1eedzRx"
+    },
+    {
+        "id": 10,
+        "name": "Infernus",
+        "avatar": "/images/inferno_card.png.webp?itok=fmn4g2x1"
+    },
+    {
+        "id": 11,
+        "name": "Ivy",
+        "avatar": "/images/tengu_card.png.webp?itok=dnojKIAN"
+    },
+    {
+        "id": 12,
+        "name": "Kelvin",
+        "avatar": "/images/kelvin_card.png.webp?itok=mfaZ3F5_"
+    },
+    {
+        "id": 13,
+        "name": "Lady Geist",
+        "avatar": "/images/spectre_card.png.webp?itok=RAH_-Agw"
+    },
+    {
+        "id": 14,
+        "name": "Lash",
+        "avatar": "/images/lash_card.png.webp?itok=4vqpkQvE"
+    },
+    {
+        "id": 15,
+        "name": "McGinnis",
+        "avatar": "/images/engineer_card.png.webp?itok=e7naXvjK"
+    },
+    {
+        "id": 16,
+        "name": "Mina",
+        "avatar": "/images/vampirebat_card.png.webp?itok=xH5WkiVg"
+    },
+    {
+        "id": 17,
+        "name": "Mirage",
+        "avatar": "/images/mirage_card.png.webp?itok=WkGHRVWv"
+    },
+    {
+        "id": 18,
+        "name": "Mo & Krill",
+        "avatar": "/images/digger_card.png.webp?itok=p5_PTJf0"
+    },
+    {
+        "id": 19,
+        "name": "Paige",
+        "avatar": "/images/bookworm_card.png.webp?itok=vVKq3MHF"
+    },
+    {
+        "id": 20,
+        "name": "Paradox",
+        "avatar": "/images/chrono_card.png.webp?itok=avfUnNS4"
+    },
+    {
+        "id": 21,
+        "name": "Pocket",
+        "avatar": "/images/synth_card.png.webp?itok=kmVuNtUn"
+    },
+    {
+        "id": 22,
+        "name": "Seven",
+        "avatar": "/images/gigawatt_card.png.webp?itok=GXdCuN5y"
+    },
+    {
+        "id": 23,
+        "name": "Shiv",
+        "avatar": "/images/shiv_card.png.webp?itok=IPgcjB3k"
+    },
+    {
+        "id": 24,
+        "name": "Sinclair",
+        "avatar": "/images/magician_card.png.webp?itok=57GRfcW3"
+    },
+    {
+        "id": 25,
+        "name": "The Doorman",
+        "avatar": "/images/doorman_card.png.webp?itok=LLKw8WLz"
+    },
+    {
+        "id": 26,
+        "name": "Victor",
+        "avatar": "/images/frank_card.png.webp?itok=p602BJSc"
+    },
+    {
+        "id": 27,
+        "name": "Vindicta",
+        "avatar": "/images/hornet_card.png.webp?itok=pb89ll2X"
+    },
+    {
+        "id": 28,
+        "name": "Viscous",
+        "avatar": "/images/viscous_card.png.webp?itok=gbL0L-cW"
+    },
+    {
+        "id": 29,
+        "name": "Vyper",
+        "avatar": "/images/kali_card.png.webp?itok=LmlFV9Wv"
+    },
+    {
+        "id": 30,
+        "name": "Warden",
+        "avatar": "/images/warden_card.png.webp?itok=yM9PSrmw"
+    },
+    {
+        "id": 31,
+        "name": "Wraith",
+        "avatar": "/images/wraith_card.png.webp?itok=estCzRq6"
+    },
+    {
+        "id": 32,
+        "name": "Yamato",
+        "avatar": "/images/yamato_card.png.webp?itok=XWDVz8qe"
+    }
+]
