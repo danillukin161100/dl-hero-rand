@@ -17,7 +17,7 @@ function App() {
   const playersRef = useRef<HTMLTextAreaElement>(null);
 
   // Функция для получения случайных объектов
-  const getRandomItems = () => {
+  const getRandomItems = async () => {
     setError("");
 
     // Проверяем, достаточно ли объектов доступно
@@ -31,7 +31,7 @@ function App() {
     }
 
     // Получаем случайные объекты
-    const selected = getRandomSelection(availableItems, count);
+    const selected = await getRandomSelection(availableItems, count);
 
     setRandomItems(selected);
 
@@ -56,7 +56,7 @@ function App() {
   };
 
   // Функция для рерола конкретного героя
-  const rerollHero = (index: number) => {
+  const rerollHero = async (index: number) => {
     setError("");
 
     const currentHero = randomItems[index];
@@ -82,7 +82,7 @@ function App() {
       return;
     }
 
-    const newHero = getRandomHero(itemsWithoutCurrent);
+    const newHero = await getRandomHero(itemsWithoutCurrent);
 
     // Обновляем массив randomItems
     const updatedItems = [...randomItems];
