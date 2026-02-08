@@ -3,8 +3,8 @@ import "./App.css";
 import data from "./assets/heroes.json";
 import type { Hero } from "./types";
 import { getRandomHero, getRandomSelection } from "./helper";
-import { GrUpdate } from "react-icons/gr";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
+import { Card } from "./components/Card/Card";
 
 function App() {
   const [randomItems, setRandomItems] = useState<Hero[]>([]);
@@ -13,6 +13,7 @@ function App() {
   const [count, setCount] = useState(4);
   const [error, setError] = useState("");
   const [isShowRightSide, setShowRightSide] = useState(true);
+  const [playersTextareaRows, setplayersTextareaRows] = useState<number>(4);
 
   const playersRef = useRef<HTMLTextAreaElement>(null);
 
@@ -25,7 +26,7 @@ function App() {
 
     if (availableItems.length < count) {
       setError(
-        `Недостаточно объектов. Доступно: ${availableItems.length}, запрошено: ${count}`
+        `Недостаточно объектов. Доступно: ${availableItems.length}, запрошено: ${count}`,
       );
       return;
     }
@@ -63,7 +64,7 @@ function App() {
 
     // Доступные объекты для рерола (все, кроме исключенных + текущий)
     const availableItems = data.filter(
-      (item) => !excludedIds.has(item.id) || item.id === currentHero.id
+      (item) => !excludedIds.has(item.id) || item.id === currentHero.id,
     );
 
     // Если нет доступных объектов для рерола
@@ -74,7 +75,7 @@ function App() {
 
     // Получаем случайный объект, исключая текущий
     const itemsWithoutCurrent = availableItems.filter(
-      (item) => item.id !== currentHero.id
+      (item) => item.id !== currentHero.id,
     );
 
     if (itemsWithoutCurrent.length === 0) {
@@ -110,6 +111,7 @@ function App() {
 
     setPlayers(val);
     setCount(val.length);
+    setplayersTextareaRows(Math.max(val.length, 4));
   };
 
   return (
@@ -144,7 +146,7 @@ function App() {
             <textarea
               onChange={changePlayersHandler}
               name="players"
-              rows={4}
+              rows={playersTextareaRows}
               ref={playersRef}
             ></textarea>
           </div>
@@ -156,69 +158,56 @@ function App() {
           <h2>Случайные герои:</h2>
           <div className="items-grid">
             {randomItems.map((item, index) => (
-              <div key={`${item.id}-${index}`} className="item-card">
-                <img
-                  src={item.avatar}
-                  alt={item.name}
-                  className="item-avatar"
-                />
-                <div className="item-info">
-                  {players[index] && (
-                    <h3 className="item-player">{players[index]}</h3>
-                  )}
-                  <h3 className="item-name">{item.name}</h3>
-                  <button
-                    onClick={() => rerollHero(index)}
-                    className="btn-reroll"
-                    title="Получить другого случайного героя"
-                  >
-                    <GrUpdate />
-                  </button>
-                  <p className="item-id">ID: {item.id}</p>
-                </div>
-              </div>
+              <Card
+                hero={item}
+                heroIndex={index}
+                rerollHero={rerollHero}
+                players={players}
+              />
             ))}
           </div>
         </div>
       </div>
 
-      <button className="right-side--toggler" onClick={showRightSideHandler}>
-        {isShowRightSide ? <IoMdArrowDropright /> : <IoMdArrowDropleft />}
-      </button>
+      <div
+        className={`right-side ${isShowRightSide ? "right-side--show" : "right-side--hide"}`}
+      >
+        <button className="right-side--toggler" onClick={showRightSideHandler}>
+          {isShowRightSide ? <IoMdArrowDropright /> : <IoMdArrowDropleft />}
+        </button>
 
-      {isShowRightSide && (
-        <div className="right-side">
-          <div className="exclusions">
-            {excludedIds.size > 0 ? (
-              <div className="excluded-list">
-                {data
-                  .filter((item) => excludedIds.has(item.id))
-                  .map((item) => (
-                    <div key={item.id} className="excluded-item">
-                      <span>
-                        {item.name} (ID: {item.id})
-                      </span>
-                      <button
-                        onClick={() => removeFromExclusions(item.id)}
-                        className="btn-remove"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-              </div>
-            ) : (
-              <p>Нет исключенных объектов</p>
-            )}
-          </div>
+        {isShowRightSide && (
+          <>
+            <div className="exclusions">
+              {excludedIds.size > 0 ? (
+                <div className="excluded-list">
+                  {data
+                    .filter((item) => excludedIds.has(item.id))
+                    .map((item) => (
+                      <div key={item.id} className="excluded-item">
+                        <span>{item.name}</span>
+                        <button
+                          onClick={() => removeFromExclusions(item.id)}
+                          className="btn-remove"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <p>Нет исключенных объектов</p>
+              )}
+            </div>
 
-          <div className="stats">
-            <p>Всего персонажей: {data.length}</p>
-            <p>Доступно персонажей: {data.length - excludedIds.size}</p>
-            <p>Исключено персонажей: {excludedIds.size}</p>
-          </div>
-        </div>
-      )}
+            <div className="stats">
+              <p>Всего персонажей: {data.length}</p>
+              <p>Доступно персонажей: {data.length - excludedIds.size}</p>
+              <p>Исключено персонажей: {excludedIds.size}</p>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

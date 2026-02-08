@@ -2,14 +2,44 @@
   box-sizing: border-box;
 }
 
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #4b4b4b;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #4b4b4b;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #4b4b4b;
+}
+
 .app {
   display: flex;
   align-items: flex-start;
-  gap: 30px;
   max-width: 100%;
   width: 100vw;
   margin: 0 auto;
-  padding: 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -18,18 +48,47 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .left-side > h2 {
   flex: 0 0 100%;
 }
 
+.right-side {
+  padding: 20px;
+  position: relative;
+  background-color: #1a1a1a;
+  margin-left: 20px;
+  height: 100vh;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.right-side--hide {
+  padding-right: 0;
+}
+
 .right-side--toggler {
-  height: calc(100vh - 40px);
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.right-side--toggler:focus {
+  outline: none;
 }
 
 textarea[name="players"] {
   width: 100%;
+  resize: none;
+  max-height: 300px;
 }
 
 .app-header {
@@ -45,8 +104,8 @@ textarea[name="players"] {
 .controls {
   background: #333;
   padding: 20px;
-  border-radius: 8px;
-  max-width: calc(50% - 15px);
+  border-radius: 16px;
+  max-width: calc(50% - 10px);
   flex: 0 0 50%;
 }
 
@@ -63,10 +122,12 @@ textarea[name="players"] {
 
 .input-group :is(input, textarea) {
   padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: unset;
+  border-radius: 8px;
   font-size: 16px;
   width: 100%;
+  outline: none;
+  background-color: #4b4b4b;
 }
 
 .buttons {
@@ -79,7 +140,7 @@ textarea[name="players"] {
 .btn-secondary {
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -95,12 +156,12 @@ textarea[name="players"] {
 }
 
 .btn-secondary {
-  background-color: #6c757d;
+  background-color: #4b4b4b;
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: #545b62;
+  background-color: #6c757d;
 }
 
 .error-message {
@@ -114,7 +175,6 @@ textarea[name="players"] {
 
 .results,
 .exclusions {
-  margin-bottom: 30px;
   flex: 0 0 100%;
 }
 
@@ -128,16 +188,17 @@ textarea[name="players"] {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  max-height: calc(100vh - 284px);
+  max-height: calc(100vh - 260px);
   overflow: auto;
+  padding-bottom: 20px;
 }
 
 .item-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px #0000001a;
   position: relative;
+  background-color: #333333;
 }
 
 .item-avatar {
@@ -166,6 +227,8 @@ textarea[name="players"] {
 .btn-reroll {
   display: flex;
   padding: 10px;
+  background-color: #4b4b4b;
+  transition: 0.2s;
 }
 
 .item-name {
@@ -208,7 +271,7 @@ textarea[name="players"] {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: calc(100vh - 196px);
+  max-height: calc(100vh - 172px);
   overflow: auto;
 }
 
@@ -218,11 +281,11 @@ textarea[name="players"] {
   align-items: center;
   padding: 10px 15px;
   background-color: #333;
-  border-radius: 4px;
+  border-radius: 16px;
 }
 
 .btn-remove {
-  background: #dc3545;
+  background: transparent;
   color: white;
   border: none;
   border-radius: 4px;
@@ -232,6 +295,10 @@ textarea[name="players"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.2s;
+  width: 24px;
+  height: 24px;
+  padding: 0;
 }
 
 .btn-remove:hover {
@@ -241,13 +308,21 @@ textarea[name="players"] {
 .stats {
   background: #333;
   padding: 15px;
-  border-radius: 4px;
+  border-radius: 16px;
   margin-top: 20px;
 }
 
 .stats p {
   margin: 5px 0;
   color: #fff;
+}
+
+.stats p:first-child {
+  margin-top: 0;
+}
+
+.stats p:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
