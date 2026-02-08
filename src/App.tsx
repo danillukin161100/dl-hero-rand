@@ -5,6 +5,7 @@ import type { Hero } from "./types";
 import { getRandomHero, getRandomSelection } from "./helper";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { Card } from "./components/Card/Card";
+import { Exclusions } from "./components/Exclusions/Exclusions";
 
 function App() {
   const [randomItems, setRandomItems] = useState<Hero[]>([]);
@@ -178,32 +179,15 @@ function App() {
 
         {isShowRightSide && (
           <>
-            <div className="exclusions">
-              {excludedIds.size > 0 ? (
-                <div className="excluded-list">
-                  {data
-                    .filter((item) => excludedIds.has(item.id))
-                    .map((item) => (
-                      <div key={item.id} className="excluded-item">
-                        <span>{item.name}</span>
-                        <button
-                          onClick={() => removeFromExclusions(item.id)}
-                          className="btn-remove"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    ))}
-                </div>
-              ) : (
-                <p>Нет исключенных объектов</p>
-              )}
-            </div>
+            <Exclusions
+              excludedIds={excludedIds}
+              removeFromExclusions={removeFromExclusions}
+            />
 
             <div className="stats">
-              <p>Всего персонажей: {data.length}</p>
-              <p>Доступно персонажей: {data.length - excludedIds.size}</p>
-              <p>Исключено персонажей: {excludedIds.size}</p>
+              <p>Всего: {data.length}</p>
+              <p>Доступно: {data.length - excludedIds.size}</p>
+              <p>Исключено: {excludedIds.size}</p>
             </div>
           </>
         )}
