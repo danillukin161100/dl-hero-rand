@@ -158,5 +158,35 @@
         "id": 32,
         "name": "Yamato",
         "avatar": "yamato_card.png"
+    },
+    {
+        "id": 33,
+        "name": "Rem",
+        "avatar": "rem.webp"
+    },
+    {
+        "id": 33,
+        "name": "Celeste",
+        "avatar": "celeste.webp"
+    },
+    {
+        "id": 33,
+        "name": "Apollo",
+        "avatar": "apollo.webp"
+    },
+    {
+        "id": 34,
+        "name": "Graves",
+        "avatar": "graves.webp"
+    },
+    {
+        "id": 34,
+        "name": "Venator",
+        "avatar": "venator.webp"
+    },
+    {
+        "id": 34,
+        "name": "Silver",
+        "avatar": "silver.webp"
     }
 ]
