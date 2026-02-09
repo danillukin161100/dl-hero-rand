@@ -35,10 +35,10 @@ export const heroesSlice = createSlice({
     getAvailableHeroes: createSelector(
       [
         (state: HeroesState) => state.heroes,
-        (state: HeroesState) => state.randomHeroes,
+        (state: HeroesState) => state.excludedIds,
       ],
-      (heroes, randomHeroes): Hero[] => {
-        return heroes.filter((t) => !randomHeroes.some((r) => r.id === t.id));
+      (heroes, excludedIds): Hero[] => {
+        return heroes.filter((t) => !excludedIds.includes(t.id));
       },
     ),
     getExcludedHeroes: createSelector(

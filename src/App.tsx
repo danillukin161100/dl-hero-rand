@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
 import "./App.css";
 import { getRandomHero, getRandomSelection } from "./helper";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
@@ -38,7 +44,7 @@ function App() {
   const playersRef = useRef<HTMLTextAreaElement>(null);
 
   // Функция для получения случайных объектов
-  const getRandomItems = () => {
+  const getRandomItems = useCallback(() => {
     dispatch(clearErrorMessage());
 
     // Проверяем, достаточно ли объектов доступно
@@ -53,9 +59,10 @@ function App() {
 
     // Получаем случайные объекты и добавляем выбранные ID в исключения
     const selected = getRandomSelection(availableHeroes, count);
+    console.log({ availableHeroes, selected });
     dispatch(setRandomHeroes(selected));
     dispatch(addExcludedIds(selected.map((t) => t.id)));
-  };
+  }, [availableHeroes, count, dispatch]);
 
   // Функция для сброса исключений
   const resetExclusions = () => {
@@ -163,6 +170,7 @@ function App() {
           <div className="items-grid">
             {randomHeroes.map((item, index) => (
               <Card
+                key={index}
                 hero={item}
                 heroIndex={index}
                 rerollHero={rerollHero}
