@@ -81,13 +81,8 @@ export const heroesSlice = createSlice({
       })
       .addCase(updateRandomHero, (state, { payload }) => {
         const { heroId, newHero } = payload;
-        const updatedHeroes = [...state.randomHeroes];
         const index = state.randomHeroes.findIndex((t) => t.id === heroId);
-
-        if (!index) return;
-
-        updatedHeroes[index] = newHero;
-        state.randomHeroes = updatedHeroes;
+        state.randomHeroes[index] = newHero;
       })
 
       .addCase(addExcludedIds, (state, { payload }) => {
