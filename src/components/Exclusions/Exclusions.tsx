@@ -1,38 +1,40 @@
 import type { FC } from "react";
-import data from "../../assets/heroes.json";
 import { getHeroImage } from "../../helper";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { removeExcludedIds } from "../../store/heroes/heroes.action";
+import { getExcludedHeroes } from "../../store/heroes/heroes.reducer";
 
-export interface ExclusionsProps {
-  excludedIds: Set<number>;
-  removeFromExclusions: (id: number) => void;
-}
+export const Exclusions: FC = () => {
+  const dispatch = useAppDispatch();
 
-export const Exclusions: FC<ExclusionsProps> = ({
-  excludedIds,
-  removeFromExclusions,
-}) => {
+  const { excludedIds } = useAppSelector((state) => state.heroes);
+  const excludedHeroes = useAppSelector(getExcludedHeroes);
+
+  // Функция для удаления конкретного объекта из исключений
+  const removeFromExclusions = (id: number) => {
+    dispatch(removeExcludedIds([id]));
+  };
+
   return (
     <div className="exclusions">
-      {excludedIds.size > 0 ? (
+      {excludedIds.length > 0 ? (
         <div className="excluded-list">
-          {data
-            .filter((item) => excludedIds.has(item.id))
-            .map((item) => (
-              <div key={item.id} className="excluded-item">
-                <img
-                  src={getHeroImage(item.avatar)}
-                  alt={item.name}
-                  className="excluded-item__avatar"
-                />
-                <span>{item.name}</span>
-                <button
-                  onClick={() => removeFromExclusions(item.id)}
-                  className="btn-remove"
-                >
-                  ✕
-                </button>
-              </div>
-            ))}
+          {excludedHeroes.map((hero) => (
+            <div key={hero.id} className="excluded-item">
+              <img
+                src={getHeroImage(hero.avatar)}
+                alt={hero.name}
+                className="excluded-item__avatar"
+              />
+              <span>{hero.name}</span>
+              <button
+                onClick={() => removeFromExclusions(hero.id)}
+                className="btn-remove"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
         </div>
       ) : (
         <p>Нет исключенных объектов</p>

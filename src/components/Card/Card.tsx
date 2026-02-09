@@ -24,7 +24,7 @@ export const Card: FC<CardProps> = ({
         )}
         <h3 className="item-name">{hero.name}</h3>
         <button
-          onClick={() => rerollHero(heroIndex)}
+          onClick={() => rerollHero(hero.id)}
           className="btn-reroll btn-secondary"
           title="Получить другого случайного героя"
         >
