@@ -169,12 +169,16 @@ textarea[name="players"] {
 }
 
 .error-message {
-  background-color: #fff;
-  color: #721c24;
+  background-color: #752828;
+  color: #fff;
   padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  border: 1px solid #f5c6cb;
+  border-radius: 16px;
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  z-index: 1;
+  box-shadow: 0px 4px 8px #0000004a;
+  transform: translateX(-50%);
 }
 
 .results,

@@ -1,10 +1,10 @@
 import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import data from "../../assets/heroes.json";
 import type { Hero } from "../../types";
+import { getHeroImage } from "../../helper";
 
-export const loadHeroes = createAsyncThunk<Hero[]>(
-  "heroes/loadHeroes",
-  () => data,
+export const loadHeroes = createAsyncThunk<Hero[]>("heroes/loadHeroes", () =>
+  data.map((t) => ({ ...t, avatar: getHeroImage(t.avatar) })),
 );
 
 export const setRandomHeroes = createAction<Hero[]>("heroes/setRandomHeroes");
@@ -18,6 +18,12 @@ export const updateRandomHero = createAction<{
   newHero: Hero;
 }>("heroes/updateRandomHero");
 
-export const addExcludedIds = createAction<Array<Hero["id"]>>("heroes/addExcludedIds")
-export const removeExcludedIds = createAction<Array<Hero["id"]>>("heroes/removeExcludedIds")
-export const clearExcludedIds = createAction("heroes/clearExcludedIds")
+export const addExcludedIds = createAction<Array<Hero["id"]>>(
+  "heroes/addExcludedIds",
+);
+export const removeExcludedIds = createAction<Array<Hero["id"]>>(
+  "heroes/removeExcludedIds",
+);
+export const clearExcludedIds = createAction("heroes/clearExcludedIds");
+
+export const setPlayers = createAction<string[]>("heroes/setPlayers");

@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { getHeroImage } from "../../helper";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { removeExcludedIds } from "../../store/heroes/heroes.action";
 import { getExcludedHeroes } from "../../store/heroes/heroes.reducer";
@@ -22,7 +21,7 @@ export const Exclusions: FC = () => {
           {excludedHeroes.map((hero) => (
             <div key={hero.id} className="excluded-item">
               <img
-                src={getHeroImage(hero.avatar)}
+                src={hero.avatar}
                 alt={hero.name}
                 className="excluded-item__avatar"
               />

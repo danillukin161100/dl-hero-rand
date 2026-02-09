@@ -17,6 +17,7 @@ import {
   clearRandomHeroes,
   loadHeroes,
   removeExcludedIds,
+  setPlayers,
   setRandomHeroes,
   updateRandomHero,
 } from "./store/heroes/heroes.action";
@@ -30,18 +31,30 @@ import type { Hero } from "./types";
 function App() {
   const dispatch = useAppDispatch();
 
-  const { heroes, randomHeroes, excludedIds } = useAppSelector(
+  const { heroes, randomHeroes, excludedIds, players } = useAppSelector(
     (state) => state.heroes,
   );
   const { error } = useAppSelector((state) => state.global);
   const availableHeroes = useAppSelector(getAvailableHeroes);
 
-  const [players, setPlayers] = useState<string[]>([]);
   const [count, setCount] = useState(4);
   const [isShowRightSide, setShowRightSide] = useState(true);
-  const [playersTextareaRows, setplayersTextareaRows] = useState<number>(4);
+  const [playersTextareaRows, setPlayersTextareaRows] = useState<number>(4);
 
   const playersRef = useRef<HTMLTextAreaElement>(null);
+  const delayRef = useRef<number | null>(null);
+
+  const setError = useCallback(
+    (message: string) => {
+      if (delayRef.current) clearTimeout(delayRef.current);
+      dispatch(setErrorMessage(message));
+
+      delayRef.current = setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 3000);
+    },
+    [dispatch],
+  );
 
   // Функция для получения случайных объектов
   const getRandomItems = useCallback(() => {
@@ -49,20 +62,19 @@ function App() {
 
     // Проверяем, достаточно ли объектов доступно
     if (availableHeroes.length < count) {
-      dispatch(
-        setErrorMessage(
-          `Недостаточно объектов. Доступно: ${availableHeroes.length}, запрошено: ${count}`,
-        ),
+      setError(
+        availableHeroes.length === 0
+          ? "Нет доступных персонажей"
+          : `Недостаточно объектов. Доступно: ${availableHeroes.length}, запрошено: ${count}`,
       );
       return;
     }
 
     // Получаем случайные объекты и добавляем выбранные ID в исключения
     const selected = getRandomSelection(availableHeroes, count);
-    console.log({ availableHeroes, selected });
     dispatch(setRandomHeroes(selected));
     dispatch(addExcludedIds(selected.map((t) => t.id)));
-  }, [availableHeroes, count, dispatch]);
+  }, [availableHeroes, count, dispatch, setError]);
 
   // Функция для сброса исключений
   const resetExclusions = () => {
@@ -116,9 +128,9 @@ function App() {
       ref.innerText = e.target.value;
     }
 
-    setPlayers(val);
+    dispatch(setPlayers(val));
     setCount(val.length);
-    setplayersTextareaRows(Math.max(val.length, 4));
+    setPlayersTextareaRows(Math.max(val.length, 4));
   };
 
   useEffect(() => {

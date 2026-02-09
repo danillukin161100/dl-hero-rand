@@ -1,4 +1,4 @@
-import type { ErrorMessage, Hero } from "../../types";
+import type { Hero } from "../../types";
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
   addExcludedIds,
@@ -8,6 +8,7 @@ import {
   loadHeroes,
   removeExcludedIds,
   removeRandomHeroes,
+  setPlayers,
   setRandomHeroes,
   updateRandomHero,
 } from "./heroes.action";
@@ -16,16 +17,16 @@ interface HeroesState {
   heroes: Hero[];
   randomHeroes: Hero[];
   excludedIds: Array<Hero["id"]>;
+  players: string[];
   isLoading: boolean;
-  errors: ErrorMessage[];
 }
 
 const initialState: HeroesState = {
   heroes: [],
   randomHeroes: [],
   excludedIds: [],
+  players: [],
   isLoading: false,
-  errors: [],
 };
 
 export const heroesSlice = createSlice({
@@ -105,6 +106,10 @@ export const heroesSlice = createSlice({
       })
       .addCase(clearExcludedIds, (state) => {
         state.excludedIds = initialState.excludedIds;
+      })
+
+      .addCase(setPlayers, (state, { payload }) => {
+        state.players = payload;
       });
   },
 });

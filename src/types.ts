@@ -3,8 +3,3 @@ export interface Hero {
   name: string;
   avatar: string;
 }
-
-export interface ErrorMessage {
-  id: string;
-  message: string;
-}
