@@ -17,7 +17,9 @@ export const Card: FC<CardProps> = ({
 }) => {
   return (
     <div key={`${hero.id}-${heroIndex}`} className="item-card">
-      <img src={hero.avatar} alt={hero.name} className="item-avatar" />
+      <div className="item-avatar">
+        <img src={hero.avatar} alt={hero.name} />
+      </div>
       <div className="item-info">
         {players[heroIndex] && (
           <h3 className="item-player">{players[heroIndex]}</h3>

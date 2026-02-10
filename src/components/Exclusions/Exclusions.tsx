@@ -17,7 +17,7 @@ export const Exclusions: FC = () => {
   return (
     <div className="exclusions">
       {excludedIds.length > 0 ? (
-        <div className="excluded-list">
+        <div className="excluded-list scrollbar-slim">
           {excludedHeroes.map((hero) => (
             <div key={hero.id} className="excluded-item">
               <img
@@ -36,7 +36,7 @@ export const Exclusions: FC = () => {
           ))}
         </div>
       ) : (
-        <p>Нет исключенных объектов</p>
+        <div className="excluded-empty">Нет исключенных объектов</div>
       )}
     </div>
   );

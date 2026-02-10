@@ -135,6 +135,11 @@ function App() {
     setPlayersTextareaRows(Math.max(val.length, 4));
   };
 
+  const onChangeCount = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = parseInt(e.target.value) || 1;
+    setCount(val);
+  };
+
   useEffect(() => {
     dispatch(loadHeroes());
   }, [dispatch]);
@@ -142,47 +147,47 @@ function App() {
   return (
     <div className="app">
       <div className="left-side">
-        <div className="controls">
-          <div className="input-group">
-            <label htmlFor="count">Количество персонажей:</label>
-            <input
-              id="count"
-              type="number"
-              min="1"
-              max={heroes.length}
-              value={count}
-              onChange={(e) => setCount(parseInt(e.target.value) || 1)}
-            />
+        <form name="rollForm" className="form-roll">
+          <div className="controls">
+            <div className="input-group">
+              <label htmlFor="count">Количество персонажей:</label>
+              <input
+                id="count"
+                type="number"
+                min="1"
+                max={heroes.length}
+                value={count}
+                onChange={onChangeCount}
+              />
+            </div>
+
+            <div className="buttons">
+              <button onClick={getRandomItems} className="btn-primary">
+                Получить случайных персонажей
+              </button>
+              <button onClick={resetExclusions} className="btn-secondary">
+                Сбросить исключения
+              </button>
+            </div>
           </div>
 
-          <div className="buttons">
-            <button onClick={getRandomItems} className="btn-primary">
-              Получить случайных персонажей
-            </button>
-            <button onClick={resetExclusions} className="btn-secondary">
-              Сбросить исключения
-            </button>
+          <div className="controls">
+            <div className="input-group input-group__players">
+              <label htmlFor="count">Игроки:</label>
+              <textarea
+                onChange={changePlayersHandler}
+                name="players"
+                rows={playersTextareaRows}
+                ref={playersRef}
+                value={players.join("\n")}
+              ></textarea>
+            </div>
           </div>
-        </div>
-
-        <div className="controls">
-          <div className="input-group input-group__players">
-            <label htmlFor="count">Игроки:</label>
-            <textarea
-              onChange={changePlayersHandler}
-              name="players"
-              rows={playersTextareaRows}
-              ref={playersRef}
-              value={players.join("\n")}
-            ></textarea>
-          </div>
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
+        </form>
 
         <div className="results">
           <h2>Случайные герои:</h2>
-          <div className="items-grid">
+          <div className="items-grid scrollbar-slim">
             {randomHeroes.map((item, index) => (
               <Card
                 key={index}
@@ -215,6 +220,8 @@ function App() {
           </>
         )}
       </div>
+
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 }
