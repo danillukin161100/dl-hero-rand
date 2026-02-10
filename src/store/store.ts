@@ -5,14 +5,31 @@ import {
   useStore,
   type TypedUseSelectorHook,
 } from "react-redux";
+import storage from "redux-persist/lib/storage";
 import { heroesSlice } from "./heroes/heroes.reducer";
 import { globalSlice } from "./global/global.reducer";
+import { persistReducer, persistStore } from "redux-persist";
 
 const reducer = combineSlices(heroesSlice, globalSlice);
 
-export const store = configureStore({
+const persistedReducer = persistReducer(
+  {
+    key: "root",
+    storage,
+    whitelist: ["heroes"],
+  },
   reducer,
+);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // необходимо для redux-persist
+    }),
 });
+
+export const persistor = persistStore(store);
 
 export type AppStore = typeof store;
 export type RootState = ReturnType<typeof reducer>;

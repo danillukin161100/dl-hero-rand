@@ -37,9 +37,9 @@ function App() {
   const { error } = useAppSelector((state) => state.global);
   const availableHeroes = useAppSelector(getAvailableHeroes);
 
-  const [count, setCount] = useState(4);
+  const [count, setCount] = useState(players.length ?? 4);
   const [isShowRightSide, setShowRightSide] = useState(true);
-  const [playersTextareaRows, setPlayersTextareaRows] = useState<number>(4);
+  const [playersTextareaRows, setPlayersTextareaRows] = useState<number>(players.length ?? 4);
 
   const playersRef = useRef<HTMLTextAreaElement>(null);
   const delayRef = useRef<number | null>(null);
@@ -171,6 +171,7 @@ function App() {
               name="players"
               rows={playersTextareaRows}
               ref={playersRef}
+              value={players.join("\n")}
             ></textarea>
           </div>
         </div>
