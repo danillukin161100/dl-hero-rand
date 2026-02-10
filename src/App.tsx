@@ -1,101 +1,119 @@
-import { useRef, useState, type ChangeEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
 import "./App.css";
-import data from "./assets/heroes.json";
-import type { Hero } from "./types";
 import { getRandomHero, getRandomSelection } from "./helper";
 import { IoMdArrowDropleft, IoMdArrowDropright } from "react-icons/io";
 import { Card } from "./components/Card/Card";
 import { Exclusions } from "./components/Exclusions/Exclusions";
+import { useAppDispatch, useAppSelector } from "./store/store";
+import {
+  addExcludedIds,
+  clearExcludedIds,
+  clearRandomHeroes,
+  loadHeroes,
+  removeExcludedIds,
+  setPlayers,
+  setRandomHeroes,
+  updateRandomHero,
+} from "./store/heroes/heroes.action";
+import {
+  clearErrorMessage,
+  setErrorMessage,
+} from "./store/global/global.action";
+import { getAvailableHeroes } from "./store/heroes/heroes.reducer";
+import type { Hero } from "./types";
 
 function App() {
-  const [randomItems, setRandomItems] = useState<Hero[]>([]);
-  const [players, setPlayers] = useState<string[]>([]);
-  const [excludedIds, setExcludedIds] = useState<Set<number>>(new Set());
-  const [count, setCount] = useState(4);
-  const [error, setError] = useState("");
+  const dispatch = useAppDispatch();
+
+  const { heroes, randomHeroes, excludedIds, players } = useAppSelector(
+    (state) => state.heroes,
+  );
+  const { error } = useAppSelector((state) => state.global);
+  const availableHeroes = useAppSelector(getAvailableHeroes);
+
+  const [count, setCount] = useState(players.length ?? 4);
   const [isShowRightSide, setShowRightSide] = useState(true);
-  const [playersTextareaRows, setplayersTextareaRows] = useState<number>(4);
+  const [playersTextareaRows, setPlayersTextareaRows] = useState<number>(players.length ?? 4);
 
   const playersRef = useRef<HTMLTextAreaElement>(null);
+  const delayRef = useRef<number | null>(null);
+
+  const setError = useCallback(
+    (message: string) => {
+      if (delayRef.current) clearTimeout(delayRef.current);
+      dispatch(setErrorMessage(message));
+
+      delayRef.current = setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 3000);
+    },
+    [dispatch],
+  );
 
   // Функция для получения случайных объектов
-  const getRandomItems = () => {
-    setError("");
+  const getRandomItems = useCallback(() => {
+    dispatch(clearErrorMessage());
 
     // Проверяем, достаточно ли объектов доступно
-    const availableItems = data.filter((item) => !excludedIds.has(item.id));
-
-    if (availableItems.length < count) {
+    if (availableHeroes.length < count) {
       setError(
-        `Недостаточно объектов. Доступно: ${availableItems.length}, запрошено: ${count}`,
+        availableHeroes.length === 0
+          ? "Нет доступных персонажей"
+          : `Недостаточно объектов. Доступно: ${availableHeroes.length}, запрошено: ${count}`,
       );
       return;
     }
 
-    // Получаем случайные объекты
-    const selected = getRandomSelection(availableItems, count);
-
-    setRandomItems(selected);
-
-    // Добавляем выбранные ID в исключения
-    const newExcludedIds = new Set(excludedIds);
-    selected.forEach((item) => newExcludedIds.add(item.id));
-    setExcludedIds(newExcludedIds);
-  };
+    // Получаем случайные объекты и добавляем выбранные ID в исключения
+    const selected = getRandomSelection(availableHeroes, count);
+    dispatch(setRandomHeroes(selected));
+    dispatch(addExcludedIds(selected.map((t) => t.id)));
+  }, [availableHeroes, count, dispatch, setError]);
 
   // Функция для сброса исключений
   const resetExclusions = () => {
-    setExcludedIds(new Set());
-    setRandomItems([]);
-    setError("");
-  };
-
-  // Функция для удаления конкретного объекта из исключений
-  const removeFromExclusions = (id: number) => {
-    const newExcludedIds = new Set(excludedIds);
-    newExcludedIds.delete(id);
-    setExcludedIds(newExcludedIds);
+    dispatch(clearExcludedIds());
+    dispatch(clearRandomHeroes());
+    dispatch(clearErrorMessage());
   };
 
   // Функция для рерола конкретного героя
-  const rerollHero = (index: number) => {
-    setError("");
+  const rerollHero = (heroId: Hero["id"]) => {
+    dispatch(clearErrorMessage());
 
-    const currentHero = randomItems[index];
-
-    // Доступные объекты для рерола (все, кроме исключенных + текущий)
-    const availableItems = data.filter(
-      (item) => !excludedIds.has(item.id) || item.id === currentHero.id,
-    );
+    const currentHero = randomHeroes.find((t) => t.id === heroId);
+    if (!currentHero) return;
 
     // Если нет доступных объектов для рерола
-    if (availableItems.length <= 1) {
-      setError("Нет доступных объектов для рерола");
+    if (availableHeroes.length <= 1) {
+      dispatch(setErrorMessage("Нет доступных объектов для рерола"));
       return;
     }
 
     // Получаем случайный объект, исключая текущий
-    const itemsWithoutCurrent = availableItems.filter(
+    const itemsWithoutCurrent = availableHeroes.filter(
       (item) => item.id !== currentHero.id,
     );
 
     if (itemsWithoutCurrent.length === 0) {
-      setError("Нет других доступных объектов");
+      dispatch(setErrorMessage("Нет других доступных объектов"));
       return;
     }
 
     const newHero = getRandomHero(itemsWithoutCurrent);
 
     // Обновляем массив randomItems
-    const updatedItems = [...randomItems];
-    updatedItems[index] = newHero;
-    setRandomItems(updatedItems);
+    dispatch(updateRandomHero({ heroId, newHero }));
 
     // Обновляем excludedIds: удаляем старый ID, добавляем новый
-    const newExcludedIds = new Set(excludedIds);
-    newExcludedIds.delete(currentHero.id);
-    newExcludedIds.add(newHero.id);
-    setExcludedIds(newExcludedIds);
+    dispatch(removeExcludedIds([currentHero.id]));
+    dispatch(addExcludedIds([newHero.id]));
   };
 
   const showRightSideHandler = () => {
@@ -110,10 +128,14 @@ function App() {
       ref.innerText = e.target.value;
     }
 
-    setPlayers(val);
+    dispatch(setPlayers(val));
     setCount(val.length);
-    setplayersTextareaRows(Math.max(val.length, 4));
+    setPlayersTextareaRows(Math.max(val.length, 4));
   };
+
+  useEffect(() => {
+    dispatch(loadHeroes());
+  }, [dispatch]);
 
   return (
     <div className="app">
@@ -125,7 +147,7 @@ function App() {
               id="count"
               type="number"
               min="1"
-              max={data.length}
+              max={heroes.length}
               value={count}
               onChange={(e) => setCount(parseInt(e.target.value) || 1)}
             />
@@ -149,6 +171,7 @@ function App() {
               name="players"
               rows={playersTextareaRows}
               ref={playersRef}
+              value={players.join("\n")}
             ></textarea>
           </div>
         </div>
@@ -158,8 +181,9 @@ function App() {
         <div className="results">
           <h2>Случайные герои:</h2>
           <div className="items-grid">
-            {randomItems.map((item, index) => (
+            {randomHeroes.map((item, index) => (
               <Card
+                key={index}
                 hero={item}
                 heroIndex={index}
                 rerollHero={rerollHero}
@@ -179,15 +203,12 @@ function App() {
 
         {isShowRightSide && (
           <>
-            <Exclusions
-              excludedIds={excludedIds}
-              removeFromExclusions={removeFromExclusions}
-            />
+            <Exclusions />
 
             <div className="stats">
-              <p>Всего: {data.length}</p>
-              <p>Доступно: {data.length - excludedIds.size}</p>
-              <p>Исключено: {excludedIds.size}</p>
+              <p>Всего: {heroes.length}</p>
+              <p>Доступно: {heroes.length - excludedIds.length}</p>
+              <p>Исключено: {excludedIds.length}</p>
             </div>
           </>
         )}

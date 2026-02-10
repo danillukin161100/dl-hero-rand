@@ -34,7 +34,7 @@ export const getRandomSelection = (
 
   for (let i = 0; i < shuffled.length; i++) {
     const item = shuffled[i];
-    const avatar = getHeroImage(item.avatar);
+    const avatar = item.avatar;
     res.push({ ...item, avatar });
   }
 
