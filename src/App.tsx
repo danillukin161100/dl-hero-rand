@@ -40,7 +40,7 @@ function App() {
   const [count, setCount] = useState(players.length > 0 ? players.length : 4);
   const [isShowRightSide, setShowRightSide] = useState(true);
   const [playersTextareaRows, setPlayersTextareaRows] = useState<number>(
-    players.length > 0 ? players.length : 4,
+    Math.max(players.length, 4),
   );
 
   const playersRef = useRef<HTMLTextAreaElement>(null);
