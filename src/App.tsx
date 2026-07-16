@@ -27,6 +27,8 @@ import {
 } from "./store/global/global.action";
 import { getAvailableHeroes } from "./store/heroes/heroes.reducer";
 import type { Hero } from "./types";
+import { fetchGuildMembers } from "./store/discord/discord.action";
+import { UserAutocomplete } from "./components/UserAutocomplete/UserAutocomplete";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -39,11 +41,6 @@ function App() {
 
   const [count, setCount] = useState(players.length > 0 ? players.length : 4);
   const [isShowRightSide, setShowRightSide] = useState(true);
-  const [playersTextareaRows, setPlayersTextareaRows] = useState<number>(
-    Math.max(players.length, 4),
-  );
-
-  const playersRef = useRef<HTMLTextAreaElement>(null);
   const delayRef = useRef<number | null>(null);
 
   const setError = useCallback(
@@ -122,17 +119,10 @@ function App() {
     setShowRightSide((prev) => !prev);
   };
 
-  const changePlayersHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { current: ref } = playersRef;
-    const val = e.target.value.split("\n").map((line) => line.trim());
-
-    if (ref) {
-      ref.innerText = e.target.value;
-    }
-
+  const changePlayersHandler = (value: string) => {
+    const val = value.split("\n").map((line) => line.trim());
     dispatch(setPlayers(val));
     setCount(val.length);
-    setPlayersTextareaRows(Math.max(val.length, 4));
   };
 
   const onChangeCount = (e: ChangeEvent<HTMLInputElement>) => {
@@ -142,6 +132,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadHeroes());
+    dispatch(fetchGuildMembers());
   }, [dispatch]);
 
   return (
@@ -172,16 +163,13 @@ function App() {
           </div>
 
           <div className="controls">
-            <div className="input-group input-group__players">
-              <label htmlFor="count">Игроки:</label>
-              <textarea
-                onChange={changePlayersHandler}
-                name="players"
-                rows={playersTextareaRows}
-                ref={playersRef}
-                value={players.join("\n")}
-              ></textarea>
-            </div>
+            <UserAutocomplete
+              multiUsers
+              value={players.join("\n")}
+              onChange={changePlayersHandler}
+              label="Игроки:"
+              rows={4}
+            />
           </div>
         </form>
 

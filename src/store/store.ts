@@ -8,9 +8,10 @@ import {
 import storage from "redux-persist/lib/storage";
 import { heroesSlice } from "./heroes/heroes.reducer";
 import { globalSlice } from "./global/global.reducer";
+import { discordSlice } from "./discord/discord.reducer";
 import { persistReducer, persistStore } from "redux-persist";
 
-const reducer = combineSlices(heroesSlice, globalSlice);
+const reducer = combineSlices(heroesSlice, globalSlice, discordSlice);
 
 const persistedReducer = persistReducer(
   {
