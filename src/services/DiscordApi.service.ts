@@ -39,11 +39,19 @@ export class DiscordApiService {
     if (config) {
       this.config = config;
     } else {
+      // В dev режиме env читаются из .env.local / .env
+      // В production (сборка через CI/CD) подставляются из secrets репозитория
       const botToken = import.meta.env.VITE_DISCORD_BOT_TOKEN;
       const guildId = import.meta.env.VITE_DISCORD_GUILD_ID;
 
-      if (botToken && guildId) {
+      if (botToken && guildId && botToken !== "placeholder" && guildId !== "placeholder") {
         this.config = { botToken, guildId };
+      } else {
+        console.warn(
+          "[DiscordApiService] Discord API не инициализирован: " +
+          "VITE_DISCORD_BOT_TOKEN или VITE_DISCORD_GUILD_ID не заданы. " +
+          "При локальном деплое это нормально (secrets доступны только через GitHub Actions)."
+        );
       }
     }
   }
